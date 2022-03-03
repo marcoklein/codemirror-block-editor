@@ -1,6 +1,6 @@
 import { EditorState } from "@codemirror/basic-setup";
 import { ChangeSpec } from "@codemirror/state";
-import { findBlockLevelOfLineNumberInState } from "./find-block-level-of-line";
+import { findBlockLevelOfLineNumberInDocument } from "./find-block-level-of-line";
 
 export const handleChangeWithinBlockLevel = EditorState.transactionFilter.of(
   (transaction) => {
@@ -8,9 +8,9 @@ export const handleChangeWithinBlockLevel = EditorState.transactionFilter.of(
     const changes: ChangeSpec[] = [];
     transaction.changes.iterChanges((fromA, toA, fromB, toB, text) => {
       const fromLine = doc.lineAt(fromA);
-      const toLine = doc.lineAt(toA);
-      const fromLevel = findBlockLevelOfLineNumberInState(
-        transaction.startState,
+      // const toLine = doc.lineAt(toA);
+      const fromLevel = findBlockLevelOfLineNumberInDocument(
+        transaction.startState.doc,
         fromLine.number
       );
       if (
@@ -21,8 +21,11 @@ export const handleChangeWithinBlockLevel = EditorState.transactionFilter.of(
       ) {
         // whitespace got inserted at beginning of line
         // => level increase
-        return;
+        // TODO for child block increase parent block only
+        console.log("level increased");
+        return transaction;
       }
+
       if (
         fromB === toB && // deleted something
         text.lines === 1 &&
@@ -30,17 +33,14 @@ export const handleChangeWithinBlockLevel = EditorState.transactionFilter.of(
       ) {
         // whitespace deleted in indentation
         // => level decrease
-        return;
+        console.log("level decreased");
+        return transaction;
       }
 
-      if (fromA - fromLine.from < fromLevel) {
-        const deleteLineBreakOfPreviousLine =
-          // first line
-          fromLine.number === 1 ||
-          //
-          toA === fromLine.to + 1
-            ? 0
-            : 1;
+      if (fromA > fromLine.from && fromA - fromLine.from < fromLevel) {
+        // delete all levels and merge with previous line
+        console.log("deleting line");
+        const deleteLineBreakOfPreviousLine = fromLine.number === 1 ? 0 : 1;
         changes.push({
           from: fromLine.from - deleteLineBreakOfPreviousLine,
           to: fromLine.from + fromLevel,
