@@ -18,7 +18,7 @@ Install dependencies
 yarn install
 ```
 
-Run the project
+Run the demo website
 
 ```bash
 yarn start
@@ -66,12 +66,23 @@ To increase or decrease a block level the extension adds or removes whitespace f
 ### Naming
 
 - **Block**: Section that may span multiple lines.
+- **Block Indentation**: Number of characters (including the _block marker_) before the actual _line content_ starts.
+- **Indentation per Level**: Number of characters that indicate one level. This is the length of a _block marker_ to keep _block indentation_ consistent throughout all _block lines_.
+- **Block Level**: Depth of an individual block. It is the _block indentation_ divided by the _indentation per level_.
 - **Block Marker**: Text that indicates a block. E.g. `- `.
 - **Block Line**: Any line within a block.
 - **Root Block Line**: Starting line of a block.
 - **Child Block Line**: Lines that precede the _Root Block Line_.
 - **Line Content**: The text of a line.
 - **Block Content**: All text lines of a block. E.g. the sum of all _line contents_.
+
+### Block Level Depth
+
+### Rendering Block Content
+
+The `setBlockContentViewFacet` sets a function to listen for block contents that shall be rendered.
+
+Only lines blocks that have no focus render. A block with focus shows its original text to allow seamless editing of the underlying text content.
 
 ## Learnings
 

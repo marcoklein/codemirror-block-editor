@@ -5,6 +5,13 @@
 - Disable `Tab+ESC` escape hatch for vim compatibility
 - Improve testing pipeline by properly integrating the Karma runner
 
+## 0.6.0
+
+- Writing events of block level changes to website
+- Link to open source page with GitHub badge
+- Move demo into separate folder
+- Add a view plugin to style `[[wikilinks]]`
+
 ## 0.5.0
 
 - Using [Karma Spec Reporter](https://www.npmjs.com/package/karma-spec-reporter) for better summaries of tests
