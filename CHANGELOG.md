@@ -5,6 +5,15 @@
 - Disable `Tab+ESC` escape hatch for vim compatibility
 - Improve testing pipeline by properly integrating the Karma runner
 
+## 0.8.0
+
+- Setting the block marker in facet
+- Fix demo by upgrading dependencies
+
+## 0.7.7
+
+- Fixing git tagging
+
 ## 0.7.6
 
 - Manual git tagging
