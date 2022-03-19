@@ -1,3 +1,7 @@
+# Moved to https://github.com/marcoklein/noteberry
+
+---
+
 # CodeMirror Block Editor Extension
 
 Creating indented list of blocks in [CodeMirror6](https://codemirror.net/6/).
